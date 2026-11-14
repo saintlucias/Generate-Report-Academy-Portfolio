@@ -5,7 +5,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 function load(overrides = {}, functionOverrides = {}) {
   const context = vm.createContext({console, ...overrides});
-  vm.runInContext(fs.readFileSync(path.join(__dirname, '../Code.gs'), 'utf8') + `
+  vm.runInContext(fs.readFileSync(path.join(__dirname, '../../../apps-script/Code.gs'), 'utf8') + `
     globalThis.api = {REPORT, demoReport_, matchingStudents_, selectStudent_, parseWrongAnswers_,
       buildReportFromSource_, loadSourceData_, readScore_, niceChartMax_,
       pageTransform_, buildReportModel_, fitText_, modelToRequests_, renderReport_,
@@ -254,7 +254,7 @@ test('보고서설정에서 이미지 접근 키와 기존 슬라이드 ID를 �
 });
 
 test('PNG를 읽을 때 resourcekey가 있으면 키 포함 API를 쓰고 없으면 기존 API를 쓴다',()=>{
-  const calls=[],bytes=Array.from(fs.readFileSync(path.join(__dirname,'../report-template.png')));
+  const calls=[],bytes=Array.from(fs.readFileSync(path.join(__dirname,'../../../apps-script/report-template.png')));
   const blob={getContentType:()=> 'image/png',getBytes:()=>bytes},file={getBlob:()=>blob};
   const local=load({DriveApp:{
     getFileById:id=>{calls.push(['id',id]);return file;},
@@ -302,7 +302,7 @@ test('파일 접근 확인은 양식 실패 후에도 슬라이드를 확인하�
 });
 
 test('접근 확인에서 빈 B5는 새 파일을 만들지 않으며 잘못된 B5 형식은 구분한다',()=>{
-  const blob={getContentType:()=> 'image/png',getBytes:()=>Array.from(fs.readFileSync(path.join(__dirname,'../report-template.png')))};
+  const blob={getContentType:()=> 'image/png',getBytes:()=>Array.from(fs.readFileSync(path.join(__dirname,'../../../apps-script/report-template.png')))};
   const h=accessHarness([['템플릿이미지','template_file_123456'],['결과슬라이드','']],{
     DriveApp:{getFileById:()=>({getBlob:()=>blob})}
   });

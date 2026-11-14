@@ -2,7 +2,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
-const root = __dirname;
+const root = path.resolve(__dirname, '../../../apps-script');
 const context = vm.createContext({console});
 vm.runInContext(fs.readFileSync(path.join(root, 'Code.gs'), 'utf8') + `
   globalThis.api = {demoReport_, buildReportModel_, fitText_, fittedColorRuns_};`, context);

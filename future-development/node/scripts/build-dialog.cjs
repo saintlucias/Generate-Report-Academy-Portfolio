@@ -1,6 +1,6 @@
 const fs=require('node:fs');
 const path=require('node:path');
-const root=__dirname;
+const root = path.resolve(__dirname, '../../../apps-script');
 const html=fs.readFileSync(path.join(root,'dialog-ui.template.html'),'utf8');
 let code=fs.readFileSync(path.join(root,'Code.gs'),'utf8');
 const declaration='const REPORT_DIALOG_HTML = '+JSON.stringify(html)+';';

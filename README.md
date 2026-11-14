@@ -18,7 +18,6 @@ Google Sheets에 학생 이름을 입력하고 버튼을 누르면, 해당 학�
 | 처리 | Google Apps Script V8, HTML Service, Google Slides API |
 | 출력 | 기존 PNG 양식 위에 텍스트·선·도형을 배치한 Google Slides |
 | 재생성 기준 | 같은 프레젠테이션·같은 스크립트 프로젝트에서 수험번호로 기존 보고서 교체 |
-| 검증 | Node.js 로컬 테스트 61개 통과 |
 | 운영 이슈 | 다른 사용자의 Drive 이미지 접근 권한 문제를 확인하고 해결 |
 
 ## 주요 기능
@@ -99,19 +98,18 @@ Google Sheets를 데이터 입력 화면으로 사용하고, Apps Script가 데�
 ```text
 .
 ├── README.md
-├── package.json
 ├── apps-script/
 │   ├── Code.gs
 │   ├── appsscript.json
 │   ├── dialog-ui.template.html
 │   ├── report-template.png
-│   ├── report-button.png
-│   ├── build-dialog.cjs
-│   ├── build-preview.cjs
-│   ├── build-dialog-preview.cjs
-│   └── tests/
-│       ├── report.test.cjs
-│       └── dialog-client.test.cjs
+│   └── report-button.png
+├── future-development/
+│   ├── README.md
+│   └── node/
+│       ├── package.json
+│       ├── scripts/
+│       └── tests/
 └── docs/
     ├── architecture.md
     ├── data-mapping.md
@@ -120,10 +118,20 @@ Google Sheets를 데이터 입력 화면으로 사용하고, Apps Script가 데�
     └── assets/report-preview.png
 ```
 
-## 현재 범위와 개선 방향
+## 현재 구현 범위
 
 현재는 지정된 25문항 양식과 시트 구조를 대상으로 구현함. 같은 수험번호의 재생성은 기존 페이지를 교체하는 방식임.
 
-다음 개선 대상으로 시험 ID를 포함한 이력 관리, 설정 기반 열 매핑, 여러 학생의 생성 요청을 순서대로 처리하는 작업 큐를 정리함.
+## 추후 개선 사항
 
-[설계 상세](docs/architecture.md) · [데이터 연결표](docs/data-mapping.md) · [문제 해결 기록](docs/troubleshooting.md) · [포트폴리오 설명문](docs/portfolio-case-study.md)
+### 독립 프로그램으로 발전될 가능성
+
+현재의 학생 데이터 처리와 보고서 배치 구조를 바탕으로, 별도 입력 화면과 작업 관리를 갖춘 독립 프로그램으로 확장하는 방안을 검토함. Node.js는 이 과정에서 보고서 처리 모듈의 실행 환경 후보로 정리함.
+
+기존 Node 기반 검증 코드와 보조 스크립트는 향후 확장 검토용 참고 자료로 분리함. 독립 프로그램의 구현은 추후 개선 단계로 두고, 구체적인 확장 방향은 [프로그램 확장 검토](future-development/README.md)에 정리함.
+
+### 보고서 업무 확장
+
+시험 ID를 포함한 이력 관리, 설정 기반 열 매핑, 여러 학생의 생성 요청을 순서대로 처리하는 작업 큐를 추가 개선 대상으로 정리함.
+
+[설계 상세](docs/architecture.md) · [데이터 연결표](docs/data-mapping.md) · [문제 해결 기록](docs/troubleshooting.md) · [포트폴리오 설명문](docs/portfolio-case-study.md) · [추후 확장 방향](future-development/README.md)

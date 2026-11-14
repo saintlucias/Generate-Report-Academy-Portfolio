@@ -1,0 +1,12 @@
+{
+  "name": "korean-exam-report-node-reference",
+  "version": "1.0.0",
+  "private": true,
+  "description": "독립 프로그램 확장 검토를 위한 Node 기반 참고 자료",
+  "scripts": {
+    "test": "node --test tests/report.test.cjs tests/dialog-client.test.cjs",
+    "build:dialog": "node scripts/build-dialog.cjs",
+    "preview:report": "node scripts/build-preview.cjs",
+    "preview:dialog": "node scripts/build-dialog-preview.cjs"
+  }
+}

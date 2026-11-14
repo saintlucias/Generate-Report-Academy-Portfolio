@@ -5,7 +5,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 const vm=require('node:vm');
 const server=vm.createContext({});
-vm.runInContext(fs.readFileSync(path.join(__dirname,'../Code.gs'),'utf8')+'\nglobalThis.render=reportDialogHtml_;',server);
+vm.runInContext(fs.readFileSync(path.join(__dirname,'../../../apps-script/Code.gs'),'utf8')+'\nglobalThis.render=reportDialogHtml_;',server);
 const html=server.render({requestedName:'데모학생'});
 const script=html.match(/<script>([\s\S]*?)<\/script>/)[1];
 
