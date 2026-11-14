@@ -12,7 +12,7 @@ Google Sheets에 학생 이름을 입력하고 버튼을 누르면, 해당 학�
 
 ## 예시 결과 이미지
 
-![보고서 예시 결과 이미지](docs/assets/report-preview.png)
+![보고서 예시 결과 이미지](docs/assets/report-example-v2.png)
 
 사용자가 제공한 예시 결과임. 학생 정보, 문항별 결과, 부분 글자색, 오각형 그래프와 전달사항이 배치된 모습을 보여줌.
 
@@ -125,7 +125,7 @@ Google Sheets를 데이터 입력 화면으로 사용하고, Apps Script가 데�
     ├── data-mapping.md
     ├── troubleshooting.md
     ├── portfolio-case-study.md
-    └── assets/report-preview.png
+    └── assets/report-example-v2.png
 ```
 
 ## 현재 구현 범위
