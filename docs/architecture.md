@@ -9,12 +9,12 @@ Google Sheets에 연결된 Apps Script를 중심으로 입력 데이터, 보고�
 | 계층 | 역할 | 주요 코드 |
 | --- | --- | --- |
 | 사용자 창 | 로딩·동명이인 선택·완료·오류, 요청 중복 방지 | dialog-ui.template.html |
-| 실행 조정 | 요청 검증, 학생 확정, 잠금, 단계 기록 | generateReportByName, createReportForDialog |
+| 실행 조정 | 요청 검증, 학생 확정, 잠금, 결과 반환 | generateReportByName, createReportForDialog |
 | 입력 읽기 | 값·표시값·부분 글자색을 같은 범위에서 조회 | readSourceRows_, loadSourceData_, readConfig_ |
 | 데이터 검증 | 수험번호, 25문항, 난이도, 오답, 점수 검증 | buildReportFromSource_, parseWrongAnswers_ |
 | 보고서 모델 | 화면 요소를 텍스트·선·도형 목록으로 구성 | buildReportModel_, inputHeader_, inputQuestions_, inputRadarChart_ |
 | 배치·색상 | 줄바꿈·글꼴 크기 추정, 색상 구간 재연결, 페이지 크기 변환 | fitText_, fittedColorRuns_, pageTransform_ |
-| 외부 파일 접근 | Drive 이미지 읽기, 공유 링크 접근 키, 파일별 진단 | readImageBlob_, extractDriveReference_, checkReportFileAccess |
+| 외부 파일 접근 | Drive 이미지 읽기, 파일 ID 추출, 템플릿 크기 확인 | readImageBlob_, extractDriveId_ |
 | Slides 출력 | 새 페이지 준비, API 요청 구성, 기존 페이지 교체 | modelToRequests_, renderReport_ |
 | 상태 보관 | 수험번호와 페이지 매핑, 생성 이력 | PropertiesService, appendReportLog_ |
 
@@ -61,7 +61,7 @@ sequenceDiagram
 
 ## 4. 양식과 좌표 모델
 
-3216 × 1960 PNG를 기준 양식으로 사용함. 각 요소에 기준 좌표, 크기, 글꼴 크기, 색상, 정렬 값을 부여함.
+배치 좌표는 3216 × 1960을 기준으로 구성하고, 각 요소에 위치·크기·글꼴 크기·색상·정렬 값을 부여함. 교체한 템플릿 이미지는 2048 × 1248 PNG이며, 기존 3216 × 1960 PNG도 함께 지원함.
 
 실제 슬라이드 크기에는 가로·세로 비율 중 작은 값을 적용해 원본 비율을 유지하고 중앙에 배치함.
 
@@ -69,7 +69,7 @@ sequenceDiagram
 scale = min(pageWidth / 3216, pageHeight / 1960)
 ```
 
-문항은 10 + 10 + 5개 블록으로 구성함. 25번 아래 회색 영역에는 시험지 공통 설명을 넣고, 오른쪽에는 그래프와 학생별 전달사항을 배치함.
+문항은 10 + 10 + 5개 블록으로 구성함. 25번 아래 병합 영역에는 시험지 공통 설명을 넣고, 오른쪽에는 그래프와 학생별 전달사항을 배치함.
 
 배경 이미지를 넣은 뒤 텍스트·선·삼각형을 별도의 Slides 요소로 생성해 편집 가능한 보고서로 구성함.
 
@@ -95,6 +95,8 @@ y = centerY - cos(angle) × radius × v / max
 
 그래프 최댓값을 고정하지 않은 경우 학생 점수와 평균 점수를 함께 보고 공통 눈금을 결정함. 두 계열은 같은 점수 단위를 기준으로 비교함.
 
+그래프 상자의 테두리를 #000000, width: 2로 설정함. 배경은 #FCC93E, alpha: 0.08로 지정하고, 테두리와 배경의 색상을 별도 값으로 관리함.
+
 ## 7. 재생성과 실패 처리
 
 Script Properties에 프레젠테이션 ID와 수험번호를 조합한 키로 슬라이드 ID를 저장함.
@@ -117,6 +119,6 @@ HTML 창을 로딩·학생 선택·완료·오류 상태로 구성함. 서버 �
 
 ## 9. 생성 기록
 
-생성시각·수험번호·학생명·원본 행·상태·슬라이드 URL·오류 내용을 기록함. 오류에는 실패 단계와 원래 메시지를 함께 남기고, 오류 상태를 빨간 글씨로 구분함.
+생성시각·수험번호·학생명·원본 행·상태·슬라이드 URL·오류 내용을 기록함. 생성 중 발생한 오류 메시지를 남기고, 오류 상태를 빨간 글씨로 구분함.
 
 현재 갱신 키는 프레젠테이션 ID와 수험번호로 구성함. 시험 ID와 월별 구분은 이후 이력 관리 개선에 반영할 항목으로 정리함.
