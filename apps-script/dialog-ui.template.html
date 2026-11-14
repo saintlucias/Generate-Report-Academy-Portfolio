@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <base target="_top">
+  <style>
+    :root{font-family:'Noto Sans KR','Malgun Gothic',Arial,sans-serif;color:#22334e;background:#fff;font-synthesis:none}
+    *{box-sizing:border-box}body{margin:0}button,a,select{-webkit-tap-highlight-color:transparent}button,select{font:inherit}[hidden]{display:none!important}
+    .shell{width:100%;min-height:560px;padding:20px 24px 18px;display:flex;flex-direction:column}
+    .brand{display:flex;gap:9px;align-items:center;font-size:14px;font-weight:750;color:#294b82;letter-spacing:-.3px}
+    .brand-mark{width:28px;height:28px;display:grid;place-items:center;border-radius:9px;background:#edf3fe;color:#4472c4}.brand-mark svg{width:18px;height:18px}
+    .view{flex:1;display:flex;align-items:center;flex-direction:column;text-align:center;padding-top:18px;animation:appear .2s ease-out}
+    .visual{height:94px;width:94px;display:grid;place-items:center;position:relative;margin-bottom:16px}.spinner{position:absolute;inset:0;border:4px solid #eaf0fa;border-top-color:#4472c4;border-right-color:#8ba9df;border-radius:50%;animation:spin 1.05s linear infinite}
+    .document-icon{width:64px;height:64px;border-radius:21px;background:#f0f5ff;display:grid;place-items:center;color:#4472c4}.document-icon svg{width:28px;height:28px}
+    .status-icon{width:80px;height:80px;border-radius:50%;display:grid;place-items:center;animation:pop .28s ease-out}.status-icon svg{height:36px;width:36px}.success-icon{background:#e9f7ef;color:#199565}.error-icon{background:#fff0f0;color:#d65361}.choice-icon{background:#edf3ff;color:#4472c4}
+    h1{font-size:23px;font-weight:750;line-height:1.4;letter-spacing:-1px;margin:0 0 10px}p{font-size:14px;line-height:1.65;color:#6b788f;margin:0}.name-chip{display:inline-block;color:#3f62a0;background:#eef3fc;border-radius:20px;font-size:12px;font-weight:650;padding:5px 12px;margin-bottom:10px}
+    .loading-copy{min-height:48px}.activity{height:4px;width:190px;background:#edf2fa;border-radius:9px;overflow:hidden;margin:27px 0 13px}.activity span{display:block;width:55%;height:100%;background:linear-gradient(90deg,#a8c1ed,#4472c4);border-radius:9px;animation:travel 1.8s ease-in-out infinite}
+    .subtle{font-size:12px;color:#8a96aa}.details{width:100%;background:#f6f8fc;border:1px solid #e9edf4;border-radius:14px;padding:12px 16px;text-align:left;margin:16px 0}.student{font-size:16px;font-weight:700;color:#2c405f;margin-bottom:6px}.student span{font-size:12px;color:#7d8ba2;font-weight:400;margin-left:10px}.report-title{font-size:13px;color:#728099;line-height:1.7;word-break:keep-all}
+    .actions{display:flex;gap:10px;width:100%;margin-top:auto;padding-top:8px}button,.primary{display:flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:11px;padding:12px 16px;font-size:14px;font-weight:650;text-decoration:none;cursor:pointer;min-height:44px;transition:background .15s,transform .15s}button:active,.primary:active{transform:translateY(1px)}.primary{background:#365d9b;color:white;flex:1}.primary:hover{background:#294b82}.primary svg{height:16px;width:16px}.secondary{background:#f0f3f8;color:#62718a;min-width:84px}.secondary:hover{background:#e6ebf3}.outline{background:white;border:1px solid #dbe3ef;color:#476487;flex:1}button:disabled{opacity:.55;cursor:wait}
+    .report-school{font-size:12px;color:#7d8ba2;margin-bottom:6px}.error-details{font-size:13px;line-height:1.75;max-height:90px;overflow:auto;text-align:left;background:#fff7f7;border:1px solid #f8e4e7;border-radius:12px;width:100%;padding:12px 14px;color:#9f5160;white-space:pre-wrap;overflow-wrap:anywhere;margin:16px 0}
+    .field{width:100%;text-align:left;margin:22px 0}.field label{font-size:12px;color:#7c8ba2;display:block;margin-bottom:8px}.field select{width:100%;background:#f7f9fc;color:#2c405f;border:1px solid #dbe3ef;border-radius:10px;padding:13px 12px;min-height:47px}
+    .footer{color:#98a2b2;text-align:center;font-size:11px;padding-top:14px;line-height:1.6}.view .actions{flex:none}.spacer{flex:1;min-height:12px}
+    :focus-visible{outline:3px solid #a5c5fa;outline-offset:3px}
+    @keyframes spin{to{transform:rotate(360deg)}}@keyframes travel{0%{transform:translateX(-110%)}100%{transform:translateX(285%)}}@keyframes appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes pop{from{transform:scale(.88);opacity:0}to{transform:scale(1);opacity:1}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+<main class="shell">
+  <header class="brand"><span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 5.5c4-1 6 .2 9 2.5 3-2.3 5-3.5 9-2.5V19c-4-1-6 .2-9 2-3-1.8-5-3-9-2z"/><path d="M12 8v13"/></svg></span>국어 날개달기</header>
+  <section class="view" data-view="loading" aria-live="polite">
+    <div class="visual" aria-hidden="true"><span class="spinner"></span><span class="document-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3h11l6 6v20H8z"/><path d="M19 3v7h6M12 15h9M12 20h9M12 25h5"/></svg></span></div>
+    <div id="loading-name" class="name-chip"></div>
+    <h1>보고서를 만들고 있어요</h1>
+    <p class="loading-copy">입력된 내용을 확인하고<br>학생의 분석표를 작성하고 있습니다.</p>
+    <div class="activity" aria-hidden="true"><span></span></div>
+    <p class="subtle">완성되면 자동으로 안내해 드릴게요.</p>
+  </section>
+  <section class="view" data-view="complete" hidden aria-live="polite">
+    <div class="visual" aria-hidden="true"><span class="status-icon success-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 25 8 8 17-19"/></svg></span></div>
+    <h1>보고서가 완성됐어요</h1><p>아래 버튼으로 분석표를 확인하세요.</p>
+    <div class="details"><div class="student"><b id="done-name"></b><span id="done-number"></span></div><div id="done-school" class="report-school"></div><div id="done-title" class="report-title"></div></div>
+    <div class="spacer"></div>
+    <div class="actions"><a id="open-report" class="primary" target="_blank" rel="noopener noreferrer">보고서 열기<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 15 15 5M5 5h10v10"/></svg></a><button class="secondary close-button" type="button">닫기</button></div>
+  </section>
+  <section class="view" data-view="error" hidden aria-live="assertive">
+    <div class="visual" aria-hidden="true"><span class="status-icon error-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M24 12v15M24 35h.01"/></svg></span></div>
+    <h1>내용을 확인해 주세요</h1><p>보고서를 만드는 중 문제가 발생했어요.</p>
+    <div id="error-message" class="error-details" role="alert"></div>
+    <div class="spacer"></div><div class="actions"><button id="retry" class="outline" type="button">다시 시도</button><button class="primary close-button" type="button">닫기</button></div>
+  </section>
+  <section class="view" data-view="choose" hidden aria-live="polite">
+    <div class="visual" aria-hidden="true"><span class="status-icon choice-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="20" cy="17" r="7"/><path d="M7 38v-3c0-8 26-8 26 0v3M34 13a6 6 0 0 1 0 12M39 32c4 1 5 3 5 6"/></svg></span></div>
+    <h1>같은 이름의 학생이 있어요</h1><p>생성할 학생의 수험번호를 선택해 주세요.</p>
+    <div class="field"><label for="student-choice">수험번호 · 학교</label><select id="student-choice"></select></div>
+    <div class="spacer"></div><div class="actions"><button id="choose-student" class="primary" type="button">선택한 학생으로 생성</button><button class="secondary close-button" type="button">닫기</button></div>
+  </section>
+  <footer class="footer">생성 결과는 ‘보고서생성기록’에서도 확인할 수 있습니다.</footer>
+</main>
+<script>
+  var initial = __REPORT_INITIAL_DATA__;
+  var busy = false;
+  var chosenNumber = '';
+  function showView(name) {
+    document.querySelectorAll('[data-view]').forEach(function(view){view.hidden=view.dataset.view!==name;});
+  }
+  function showError(message) {
+    busy=false;
+    document.getElementById('error-message').textContent=String(message||'잠시 후 다시 시도해 주세요.');
+    showView('error');
+  }
+  function handleResult(result) {
+    busy=false;
+    if(!result||typeof result.state!=='string'){showError('결과를 확인하지 못했습니다. 생성 기록을 확인한 뒤 다시 시도해 주세요.');return;}
+    if(result.state==='choose'){
+      var select=document.getElementById('student-choice');select.textContent='';
+      (result.candidates||[]).forEach(function(student){
+        var option=document.createElement('option');option.value=student.examNumber;
+        option.textContent=student.examNumber+(student.school?' · '+student.school:'');select.appendChild(option);
+      });
+      if(!select.options.length){showError('선택할 학생을 찾지 못했습니다. S7의 이름을 확인해 주세요.');return;}
+      showView('choose');select.focus();return;
+    }
+    if(result.state==='complete'){
+      if(!/^https:\/\/docs\.google\.com\/presentation\/d\//.test(String(result.url||''))){showError('보고서 링크를 확인하지 못했습니다. 생성 기록을 확인해 주세요.');return;}
+      document.getElementById('done-name').textContent=result.name+' 학생';
+      document.getElementById('done-number').textContent='수험번호 '+result.examNumber;
+      document.getElementById('done-school').textContent=result.schoolName?'학교 '+result.schoolName:'';
+      document.getElementById('done-school').hidden=!result.schoolName;
+      document.getElementById('done-title').textContent=result.title;
+      document.getElementById('open-report').href=result.url;
+      showView('complete');document.getElementById('open-report').focus();return;
+    }
+    showError(result.message);
+  }
+  function requestReport(number) {
+    if(busy)return;busy=true;chosenNumber=number||'';
+    document.getElementById('loading-name').textContent=initial.requestedName?initial.requestedName+' 학생':'보고서 준비';
+    showView('loading');
+    if(!window.google||!google.script||!google.script.run){showError('구글 시트의 보고서 생성 버튼으로 실행해 주세요.');return;}
+    google.script.run.withSuccessHandler(handleResult).withFailureHandler(function(error){
+      showError(error&&error.message?error.message:'연결을 확인하지 못했습니다. 생성 기록을 확인한 뒤 다시 시도해 주세요.');
+    }).createReportForDialog({requestedName:initial.requestedName||'',examNumber:chosenNumber});
+  }
+  document.getElementById('retry').addEventListener('click',function(){requestReport(chosenNumber);});
+  document.getElementById('choose-student').addEventListener('click',function(){requestReport(document.getElementById('student-choice').value);});
+  document.querySelectorAll('.close-button').forEach(function(button){button.addEventListener('click',function(){if(window.google&&google.script&&google.script.host)google.script.host.close();});});
+  requestReport('');
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+const fs=require('node:fs');
+const path=require('node:path');
+const root=__dirname;
+const html=fs.readFileSync(path.join(root,'dialog-ui.template.html'),'utf8');
+let code=fs.readFileSync(path.join(root,'Code.gs'),'utf8');
+const declaration='const REPORT_DIALOG_HTML = '+JSON.stringify(html)+';';
+if(/^const REPORT_DIALOG_HTML = .*;$/m.test(code))code=code.replace(/^const REPORT_DIALOG_HTML = .*;$/m,()=>declaration);
+else code+='\n'+declaration+'\n';
+fs.writeFileSync(path.join(root,'Code.gs'),code,'utf8');
+console.log('로딩·완료·오류·학생 선택 UI를 Code.gs에 포함했습니다.');

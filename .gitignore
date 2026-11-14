@@ -1,0 +1,21 @@
+# Local dependencies and generated previews
+node_modules/
+apps-script/preview.html
+apps-script/dialog-preview.html
+*.log
+*.zip
+
+# Local credentials and private exports
+.env
+.env.*
+!.env.example
+.clasp.json
+.clasprc.json
+credentials*.json
+token*.json
+private/
+exports/
+
+# Operating system files
+.DS_Store
+Thumbs.db
